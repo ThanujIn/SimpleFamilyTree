@@ -19,4 +19,9 @@ public class MemberController {
         return memberService.getMemberById(memberId);
     }
 
+    @GetMapping(path = "/findAll")
+    public List<MemberDTO> findAll(){
+        return memberService.findAll();
+    }
+
 }

@@ -27,6 +27,33 @@ public class MemberService {
 
     private List<MemberDTO> members = loadMembersFromDb();
 
+    public Map<String, MemberDTO> loadMembersToMap(){
+        Map<String, MemberDTO> membersList = new HashMap<>();
+        for(MemberDTO member : members){
+            membersList.put(member.getId(), member);
+        }
+        return membersList;
+    }
+
+    List<MemberDTO> getMembers(){
+        return members;
+    }
+
+    private void updateChildDetails(MemberDTO member){
+
+        for(MemberDTO members : members){
+            if(members.getId().equalsIgnoreCase(member.getMother().getId()) || members.getId().equalsIgnoreCase(member.getFather().getId())){
+                if(members.getChildren() == null){
+                    List<MemberDTO> children = new ArrayList<>();
+                    children.add(member);
+                    members.setChildren(children);
+                }else {
+                    member.getChildren().add(member);
+                }
+
+            }
+        }
+    }
 
     public MemberDTO getMemberById(String memberId){
         MemberDTO memberDTO = new MemberDTO();
