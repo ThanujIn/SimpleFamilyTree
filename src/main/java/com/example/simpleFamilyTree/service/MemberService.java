@@ -39,6 +39,20 @@ public class MemberService {
         return members;
     }
 
+    public String addMember(MemberDTO member){
+        Map<String, MemberDTO> membersMap = loadMembersToMap();
+        if(membersMap.get(member.getId()) == null){
+            if(member.getFather() != null && member.getMother() != null && membersMap.get(member.getFather().getId()) != null && membersMap.get(member.getMother().getId()) != null && membersMap.get(member.getFather().getId()).getGender().equalsIgnoreCase("Male") && membersMap.get(member.getMother().getId()).getGender().equalsIgnoreCase("Female")){
+                members.add(member);
+                updateChildDetails(member);
+                return "Member Added Successfully";
+            }
+            return "Invalid Parent Details";
+        }else{
+            return "Member ID already exists";
+        }
+    }
+
     private void updateChildDetails(MemberDTO member){
 
         for(MemberDTO members : members){

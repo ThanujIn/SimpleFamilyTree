@@ -24,4 +24,9 @@ public class MemberController {
         return memberService.findAll();
     }
 
+    @PostMapping(path = "/addMember")
+    public String addMember(@RequestBody MemberDTO member){
+        return memberService.addMember(member);
+    }
+
 }
